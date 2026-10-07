@@ -1,0 +1,19 @@
+{
+  "type": "record",
+  "name": "verification_engine_verified",
+  "namespace": "com.nepstudent.events",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "occurredAt",
+      "type": "string"
+    },
+    {
+      "name": "payload",
+      "type": "string"
+    }
+  ]
+}

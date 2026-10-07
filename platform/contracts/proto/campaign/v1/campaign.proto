@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package nepstudent.campaign.v1;
+
+service CampaignService {
+  rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message HealthCheckRequest {
+  string service = 1;
+}
+
+message HealthCheckResponse {
+  string status = 1;
+}

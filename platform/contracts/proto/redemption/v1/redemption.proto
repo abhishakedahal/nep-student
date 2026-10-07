@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package nepstudent.redemption.v1;
+
+service RedemptionService {
+  rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
+}
+
+message HealthCheckRequest {
+  string service = 1;
+}
+
+message HealthCheckResponse {
+  string status = 1;
+}
