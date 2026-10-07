@@ -1,0 +1,77 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum VerificationTrack {
+  PARTNER_COLLEGE
+  UNLISTED_COLLEGE
+}
+
+enum VerificationStatus {
+  DRAFT
+  SUBMITTED
+  IN_REVIEW
+  APPROVED
+  REJECTED
+  MORE_INFO_REQUESTED
+  EXPIRED
+}
+
+model VerificationRequest {
+  id                  String             @id @default(uuid())
+  studentProfileId    String
+  track               VerificationTrack
+  status              VerificationStatus @default(DRAFT)
+  collegeId           String?
+  unlistedCollegeName String?
+  studentIdNumber     String?
+  officialName        String?
+  reviewerId          String?
+  claimedAt           DateTime?
+  claimExpiresAt      DateTime?
+  cooldownUntil       DateTime?
+  expiresAt           DateTime?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+
+  documents           VerificationDocument[]
+  decisions           VerificationDecision[]
+
+  @@index([studentProfileId, status])
+  @@map("verification_requests")
+}
+
+model VerificationDocument {
+  id                    String              @id @default(uuid())
+  verificationRequestId String
+  documentType          String
+  storageKey            String
+  originalFilename      String
+  mimeType              String
+  fileSizeBytes         Int
+  createdAt             DateTime            @default(now())
+
+  verificationRequest   VerificationRequest @relation(fields: [verificationRequestId], references: [id], onDelete: Cascade)
+
+  @@map("verification_documents")
+}
+
+model VerificationDecision {
+  id                    String              @id @default(uuid())
+  verificationRequestId String
+  decision              String
+  deciderId             String?
+  deciderType           String              @default("SYSTEM")
+  reason                String?
+  comments              String?
+  createdAt             DateTime            @default(now())
+
+  verificationRequest   VerificationRequest @relation(fields: [verificationRequestId], references: [id], onDelete: Cascade)
+
+  @@map("verification_decisions")
+}

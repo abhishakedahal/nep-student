@@ -1,0 +1,45 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model StudentProfile {
+  id            String              @id @default(uuid())
+  userId        String              @unique
+  officialName  String
+  displayName   String?
+  dateOfBirth   DateTime?
+  gender        String?
+  phone         String?
+  phoneVerified Boolean             @default(false)
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+
+  memberships   CollegeMembership[]
+
+  @@index([officialName])
+  @@map("student_profiles")
+}
+
+model CollegeMembership {
+  id               String         @id @default(uuid())
+  studentProfileId String
+  collegeId        String
+  studentIdNumber  String
+  program          String?
+  batchYear        Int?
+  isCurrent        Boolean        @default(true)
+  verifiedAt       DateTime?
+  expiresAt        DateTime?
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+
+  studentProfile   StudentProfile @relation(fields: [studentProfileId], references: [id], onDelete: Cascade)
+
+  @@unique([studentProfileId, collegeId])
+  @@map("college_memberships")
+}

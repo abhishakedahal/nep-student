@@ -1,0 +1,58 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model College {
+  id              String                 @id @default(uuid())
+  name            String
+  slug            String                 @unique
+  code            String?                @unique
+  city            String                 @default("Kathmandu")
+  district        String?
+  hasRosterAccess Boolean                @default(false)
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  studentRecords  CollegeStudentRecord[]
+  rosterImports   RosterImport[]
+
+  @@map("colleges")
+}
+
+model CollegeStudentRecord {
+  id              String       @id @default(uuid())
+  collegeId       String
+  officialName    String
+  studentIdNumber String
+  dateOfBirth     DateTime?
+  program         String?
+  status          String       @default("ACTIVE")
+  createdAt       DateTime     @default(now())
+
+  college         College      @relation(fields: [collegeId], references: [id], onDelete: Restrict)
+  rosterImportId  String?
+  rosterImport    RosterImport? @relation(fields: [rosterImportId], references: [id], onDelete: SetNull)
+
+  @@unique([collegeId, studentIdNumber])
+  @@map("college_student_records")
+}
+
+model RosterImport {
+  id           String                 @id @default(uuid())
+  collegeId    String
+  importedById String
+  fileName     String
+  totalRows    Int                    @default(0)
+  status       String                 @default("PENDING")
+  createdAt    DateTime               @default(now())
+
+  college      College                @relation(fields: [collegeId], references: [id], onDelete: Restrict)
+  studentRecords CollegeStudentRecord[]
+
+  @@map("roster_imports")
+}

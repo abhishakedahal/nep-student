@@ -1,0 +1,26 @@
+{
+  "name": "@nepstudent/audit-svc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint src/",
+    "test": "jest",
+    "db:migrate": "prisma migrate dev"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "@prisma/client": "^5.14.0",
+    "kafkajs": "^2.2.4",
+    "pino": "^8.20.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^20.11.0",
+    "prisma": "^5.14.0",
+    "tsx": "^4.7.1"
+  }
+}
