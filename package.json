@@ -1,0 +1,39 @@
+{
+  "name": "nepstudent",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Nepal-focused student marketplace and verification platform",
+  "workspaces": [
+    "apps/*",
+    "bff/*",
+    "services/*",
+    "workers/*",
+    "platform/sdk/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "dev:student-web": "npm run dev --workspace=apps/student-web",
+    "dev:business-portal": "npm run dev --workspace=apps/business-portal",
+    "dev:college-portal": "npm run dev --workspace=apps/college-portal",
+    "dev:super-admin": "npm run dev --workspace=apps/super-admin-portal",
+    "dev:student-bff": "npm run dev --workspace=bff/student-bff",
+    "dev:business-bff": "npm run dev --workspace=bff/business-bff",
+    "dev:admin-bff": "npm run dev --workspace=bff/admin-bff",
+    "dev:identity": "npm run dev --workspace=services/identity-svc",
+    "dev:verification": "npm run dev --workspace=services/verification-svc",
+    "dev:campaign": "npm run dev --workspace=services/campaign-offer-svc",
+    "dev:redemption": "npm run dev --workspace=services/redemption-svc",
+    "dev:workers": "turbo run dev --filter=@nepstudent/*-worker"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "npm@11.6.2"
+}

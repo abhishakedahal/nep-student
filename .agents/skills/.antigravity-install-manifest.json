@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-06T19:08:04.491Z",
+  "entries": [
+    "api-design-principles",
+    "api-patterns",
+    "api-security-best-practices",
+    "auth-implementation-patterns",
+    "backend-architect",
+    "bullmq-specialist",
+    "database-design",
+    "nodejs-backend-patterns"
+  ]
+}
